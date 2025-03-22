@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import RoutineList from './pages/RoutineList';
+import StartRoutine from './pages/StartRoutine';
 
 setupIonicReact();
 
@@ -44,6 +45,7 @@ const App: React.FC = () => (
         <Route exact path="/home" component={Home} />
         <Route exact path="/add-routine" component={AddRoutine} />
         <Route exact path="/" component={RoutineList} />
+        <Route exact path="/start-routine/:id" component={StartRoutine} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
