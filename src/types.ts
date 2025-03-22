@@ -11,3 +11,7 @@ export type Routine = {
   tasks: Task[];
 }
 
+export type RoutineFormData = {
+  name: string
+  tasks: Task[]
+}
