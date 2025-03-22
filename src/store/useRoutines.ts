@@ -6,12 +6,13 @@ type RoutineStore = {
   routines: Routine[];
   loadRoutines: () => Promise<void>;
   addRoutine: (routine: Routine) => Promise<void>;
+  updateRoutine: (updatedRoutine: Routine) => Promise<void>;
   deleteRoutine: (id: string) => Promise<void>;
 }
 
 const STORAGE_KEY = "routines";
 
-export const useRoutineStore = create<RoutineStore>((set) => ({
+export const useRoutineStore = create<RoutineStore>((set, get) => ({
   routines: [],
 
   loadRoutines: async () => {
@@ -21,18 +22,20 @@ export const useRoutineStore = create<RoutineStore>((set) => ({
   },
 
   addRoutine: async (routine) => {
-    set((state) => {
-      const updatedRoutines = [...state.routines, routine];
-      Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(updatedRoutines) });
-      return { routines: updatedRoutines };
-    });
+    const updatedRoutines = [...get().routines, routine];
+    await Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(updatedRoutines) });
+    set({ routines: updatedRoutines });
+  },
+
+  updateRoutine: async (updatedRoutine) => {
+    const updatedRoutines = get().routines.map((r) => (r.id === updatedRoutine.id ? updatedRoutine : r));
+    await Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(updatedRoutines) });
+    set({ routines: updatedRoutines });
   },
 
   deleteRoutine: async (id) => {
-    set((state) => {
-      const updatedRoutines = state.routines.filter((r) => r.id !== id);
-      Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(updatedRoutines) });
-      return { routines: updatedRoutines };
-    });
+    const updatedRoutines = get().routines.filter((r) => r.id !== id);
+    await Preferences.set({ key: STORAGE_KEY, value: JSON.stringify(updatedRoutines) });
+    set({ routines: updatedRoutines });
   },
 }));

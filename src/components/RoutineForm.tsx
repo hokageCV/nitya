@@ -2,6 +2,7 @@ import { IonButton, IonInput, IonItem, IonList } from '@ionic/react'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import type { RoutineFormData, Task } from '../types'
+import { useHistory } from 'react-router'
 
 export type RoutineFormProps = {
   initialData?: RoutineFormData
@@ -9,6 +10,7 @@ export type RoutineFormProps = {
 }
 
 const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
+  const history = useHistory();
   const [formData, setFormData] = useState<RoutineFormData>({
     name: initialData?.name || '',
     tasks: initialData?.tasks || [],
@@ -36,6 +38,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
   const handleSubmit = () => {
     if (formData.name.trim() === '' || formData.tasks.length === 0) return
     onSubmit(formData)
+    history.push('/')
   }
 
   return (

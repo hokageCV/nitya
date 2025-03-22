@@ -29,6 +29,9 @@ const RoutineList: React.FC = () => {
                 <IonButton color="primary" onClick={() => history.push(`/start-routine/${routine.id}`)}>
                   Start
                 </IonButton>
+                <IonButton color="tertiary" onClick={() => history.push(`/edit-routine/${routine.id}`)}>
+                  Edit
+                </IonButton>
                 <IonButton color="danger" onClick={() => deleteRoutine(routine.id)}>
                   Delete
                 </IonButton>
