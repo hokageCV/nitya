@@ -3,6 +3,7 @@ export type Task = {
   name: string;
   time?: number;
   reps?: number;
+  sets: number
 }
 
 export type Routine = {

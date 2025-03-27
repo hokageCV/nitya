@@ -20,6 +20,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
     name: '',
     time: undefined,
     reps: undefined,
+    sets: 1,
   })
 
   const updateField = (field: keyof RoutineFormData, value: string | Task[]) => {
@@ -32,7 +33,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
       ...prev,
       tasks: [...prev.tasks, { id: uuidv4(), ...newTask }],
     }))
-    setNewTask({ name: '', time: undefined, reps: undefined })
+    setNewTask({ name: '', time: undefined, reps: undefined, sets: 1})
   }
 
   const handleSubmit = () => {
@@ -75,7 +76,12 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
         value={newTask.reps}
         onIonChange={(e) => setNewTask({ ...newTask, reps: Number(e.detail.value) })}
       />
-
+      <IonInput
+        type='number'
+        placeholder='Sets'
+        value={newTask.sets}
+        onIonChange={(e) => setNewTask({ ...newTask, sets: Number(e.detail.value) })}
+      />
       <IonButton expand='full' onClick={addTask}>
         Add Task
       </IonButton>

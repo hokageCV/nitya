@@ -6,6 +6,7 @@ const useRoutineState = (routine?: Routine | null) => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [routineCompleted, setRoutineCompleted] = useState(false)
+  const [currentSet, setCurrentSet] = useState(1)
 
   const currentTask = routine?.tasks[currentTaskIndex]
 
@@ -32,12 +33,20 @@ const useRoutineState = (routine?: Routine | null) => {
 
   const moveToNextTask = useCallback(() => {
     if (!routine) return
-    if (currentTaskIndex < routine.tasks.length - 1) {
+
+    if (currentTask && currentSet < (currentTask.sets || 1)) {
+      // 🚧 If there are more sets, repeat the same task
+      setCurrentSet((prev) => prev + 1)
+      setTimeLeft(currentTask.time || null)
+      setIsRunning(true)
+    } else if (currentTaskIndex < routine.tasks.length - 1) {
+      // 🚧 Otherwise, move to the next task
       setCurrentTaskIndex((prev) => prev + 1)
+      setCurrentSet(1) // Reset set count
     } else {
       setRoutineCompleted(true)
     }
-  }, [routine, currentTaskIndex])
+  }, [routine, currentTask, currentSet, currentTaskIndex])
 
   useEffect(() => {
     if (isRunning && timeLeft === 0) {
@@ -46,7 +55,7 @@ const useRoutineState = (routine?: Routine | null) => {
     }
   }, [timeLeft, isRunning, moveToNextTask])
 
-  return { currentTask, timeLeft, routineCompleted, moveToNextTask }
+  return { currentTask, currentSet, timeLeft, routineCompleted, moveToNextTask }
 }
 
 export default useRoutineState;

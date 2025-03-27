@@ -1,17 +1,23 @@
 import { IonButton, IonContent, IonText } from '@ionic/react';
+import type { Task } from '../types';
 
 const OngoingTask = ({
   task,
   timeLeft,
   moveToNextTask,
+  currentSet
 }: {
-  task: { name: string; time?: number; reps?: number };
+  task: Task;
   timeLeft: number | null;
   moveToNextTask: () => void;
+  currentSet: number
 }) => (
   <IonContent className="ion-padding">
     <IonText>
       <h2>{task.name}</h2>
+    </IonText>
+    <IonText>
+      <p>Set {currentSet} of {task.sets}</p>
     </IonText>
 
     {task.time ? (

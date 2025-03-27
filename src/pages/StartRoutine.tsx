@@ -15,7 +15,7 @@ const StartRoutine: React.FC = () => {
 
   if (!routine) return <IonText>Routine not found.</IonText>
 
-  const { currentTask, timeLeft, routineCompleted, moveToNextTask } = useRoutineState(routine)
+  const { currentTask, currentSet, timeLeft, routineCompleted, moveToNextTask } = useRoutineState(routine)
 
   if (routineCompleted) return <RoutineCompletedView routineName={routine.name} />
 
@@ -27,7 +27,7 @@ const StartRoutine: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       {currentTask && (
-        <OngoingTask task={currentTask} timeLeft={timeLeft} moveToNextTask={moveToNextTask} />
+        <OngoingTask task={currentTask} timeLeft={timeLeft} moveToNextTask={moveToNextTask} currentSet={currentSet} />
       )}
     </IonPage>
   )
