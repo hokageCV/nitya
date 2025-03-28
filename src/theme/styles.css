@@ -1,0 +1,37 @@
+
+.toolbar {
+  --background: var(--headerBg);
+  --color: var(--headerText);
+}
+
+
+ion-content {
+  --background: var(--baseBg);
+}
+
+.add-btn {
+  --background: var(--accent);
+  --color: black;
+}
+
+.save-btn {
+  --background: var(--secondary);
+  --color: black;
+  display: block;
+  width: max-content;
+}
+
+.routine-list {
+  padding: 0px;
+}
+
+.ion-item {
+  --background: var(--listBg);
+  --padding-top: 5px;
+  border-radius: 5px;
+}
+
+.list-action-btn {
+  --background: var(--list-action-btn);
+}
+

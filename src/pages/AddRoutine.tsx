@@ -14,7 +14,7 @@ const AddRoutine: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className='toolbar'>
           <IonTitle>Add Routine</IonTitle>
         </IonToolbar>
       </IonHeader>

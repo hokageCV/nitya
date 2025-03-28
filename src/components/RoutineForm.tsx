@@ -91,10 +91,11 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
         value={newTask.sets}
         onIonChange={(e) => setNewTask({ ...newTask, sets: Number(e.detail.value) })}
       />
-      <IonButton expand='full' onClick={addTask}>
+      <IonButton className='add-btn' onClick={addTask}>
         Add Task
       </IonButton>
-      <IonButton expand='full' color='success' onClick={handleSubmit}>
+
+      <IonButton  className='save-btn' onClick={handleSubmit}>
         Save Routine
       </IonButton>
     </>

@@ -22,7 +22,7 @@ const StartRoutine: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className='toolbar'>
           <IonTitle>{routine.name}</IonTitle>
         </IonToolbar>
       </IonHeader>

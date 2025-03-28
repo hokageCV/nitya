@@ -20,7 +20,7 @@ const EditRoutine: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className='toolbar'>
           <IonTitle>Edit Routine</IonTitle>
         </IonToolbar>
       </IonHeader>

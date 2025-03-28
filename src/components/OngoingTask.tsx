@@ -1,5 +1,6 @@
 import { IonButton, IonContent, IonText } from '@ionic/react';
 import type { Task } from '../types';
+import './OngoingTask.css'
 
 const OngoingTask = ({
   task,
@@ -14,29 +15,29 @@ const OngoingTask = ({
 }) => (
   <IonContent className="ion-padding">
     <IonText>
-      <h2>{task.name}</h2>
+      <h2 className='task-name'>{task.name}</h2>
     </IonText>
 
     <IonText>
-      <p>{task.description}</p>
+      <p className='task-description'>{task.description}</p>
     </IonText>
 
     <IonText>
-      <p>Set {currentSet} of {task.sets}</p>
+      <p className='task-set'>Set {currentSet} of {task.sets}</p>
     </IonText>
 
     {task.time ? (
       <IonText>
-        <h1>{timeLeft}s</h1>
+        <h1 className='frequency-indicator'>{timeLeft}s</h1>
       </IonText>
     ) : (
       <IonText>
-        <h1>{task.reps} reps</h1>
+        <h1 className='frequency-indicator'>{task.reps} reps</h1>
       </IonText>
     )}
 
     {!task.time && (
-      <IonButton expand="full" onClick={moveToNextTask}>
+      <IonButton className='add-btn' expand="full" onClick={moveToNextTask}>
         Next
       </IonButton>
     )}

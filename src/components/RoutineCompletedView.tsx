@@ -11,7 +11,7 @@ import {
 const RoutineCompletedView = ({ routineName }: { routineName: string }) => (
   <IonPage>
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar className='toolbar'>
         <IonTitle>{routineName}</IonTitle>
       </IonToolbar>
     </IonHeader>
@@ -20,7 +20,7 @@ const RoutineCompletedView = ({ routineName }: { routineName: string }) => (
         <h2>Routine Completed! 🎉</h2>
       </IonText>
        {/* routerDirection='root' to reset navigation stack */}
-      <IonButton expand='full' routerLink='/' routerDirection='root'>
+      <IonButton className='save-btn' expand='full' routerLink='/' routerDirection='root'>
         Go to Home
       </IonButton>
     </IonContent>

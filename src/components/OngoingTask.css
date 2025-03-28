@@ -1,0 +1,16 @@
+.task-name {
+  font-size: 40px;
+  margin: 18px 0px 0px;
+}
+
+.task-description {
+  margin: 0px 0px 16px;
+}
+
+.task-set {
+  font-size: 26px;
+}
+
+.frequency-indicator {
+  font-size: 30px;
+}

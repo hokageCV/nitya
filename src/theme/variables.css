@@ -1,2 +1,13 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+  --baseBg: #fcf8f0;
+  --headerBg: #e8ca8e;
+  --headerText: black;
+  --secondary: #97e6bf;
+  --accent: #5fc6d8;
+
+  --listBg: #f9f0e0;
+  --list-action-btn: #f5e9cf;
+}
