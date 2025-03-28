@@ -18,6 +18,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
 
   const [newTask, setNewTask] = useState<Omit<Task, 'id'>>({
     name: '',
+    description: '',
     time: undefined,
     reps: undefined,
     sets: 1,
@@ -33,7 +34,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
       ...prev,
       tasks: [...prev.tasks, { id: uuidv4(), ...newTask }],
     }))
-    setNewTask({ name: '', time: undefined, reps: undefined, sets: 1})
+    setNewTask({ name: '', description: '', time: undefined, reps: undefined, sets: 1})
   }
 
   const handleSubmit = () => {
@@ -53,8 +54,11 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
       <IonList>
         {formData.tasks.map((task, index) => (
           <IonItem key={task.id}>
-            {index + 1}. {task.name} {task.time ? `(${task.time}s)` : ''}{' '}
-            {task.reps ? `(${task.reps} reps)` : ''}
+            <div>
+              {index + 1}. {task.name} {task.time ? `(${task.time}s)` : ''}{' '}
+              {task.reps ? `(${task.reps} reps)` : ''}
+              {task.description && <small style={{ display: "block", color: "gray" }}>{task.description}</small>}
+            </div>
           </IonItem>
         ))}
       </IonList>
@@ -63,6 +67,11 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
         placeholder='Task Name'
         value={newTask.name}
         onIonChange={(e) => setNewTask({ ...newTask, name: e.detail.value! })}
+      />
+      <IonInput
+        placeholder='Description'
+        value={newTask.description}
+        onIonChange={(e) => setNewTask({ ...newTask, description: e.detail.value! })}
       />
       <IonInput
         type='number'

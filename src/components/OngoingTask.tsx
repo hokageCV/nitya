@@ -16,6 +16,11 @@ const OngoingTask = ({
     <IonText>
       <h2>{task.name}</h2>
     </IonText>
+
+    <IonText>
+      <p>{task.description}</p>
+    </IonText>
+
     <IonText>
       <p>Set {currentSet} of {task.sets}</p>
     </IonText>
