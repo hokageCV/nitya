@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     react(),
     legacy(),
-    VitePWA({ registerType: 'autoUpdate' })
+    VitePWA({ registerType: 'autoUpdate', manifest: false })
   ],
   test: {
     globals: true,

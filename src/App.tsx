@@ -1,7 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
 import AddRoutine from './pages/AddRoutine';
 
 /* Core CSS required for Ionic components to work properly */
@@ -44,7 +43,6 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home" component={Home} />
         <Route exact path="/add-routine" component={AddRoutine} />
         <Route exact path="/" component={RoutineList} />
         <Route exact path="/start-routine/:id" component={StartRoutine} />

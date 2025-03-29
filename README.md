@@ -1,6 +1,12 @@
-# Nitya
+# [Nitya](https://nitya-routine.netlify.app)
 
-Helper for your nitya (perpetual) tasks.
+Helper for your 'नित्य' (perpetual) routines.
+
+## Tools used
+
+- Ionic
+- React
+- PWA
 
 ## Development
 
