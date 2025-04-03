@@ -1,8 +1,18 @@
-import { IonButton, IonInput, IonItem, IonList } from '@ionic/react'
+import {
+  IonButton,
+  IonCol,
+  IonGrid,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonRow,
+  IonTextarea,
+} from '@ionic/react'
 import { useState } from 'react'
+import { useHistory } from 'react-router'
 import { v4 as uuidv4 } from 'uuid'
 import type { RoutineFormData, Task } from '../types'
-import { useHistory } from 'react-router'
 
 export type RoutineFormProps = {
   initialData?: RoutineFormData
@@ -10,7 +20,7 @@ export type RoutineFormProps = {
 }
 
 const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
-  const history = useHistory();
+  const history = useHistory()
   const [formData, setFormData] = useState<RoutineFormData>({
     name: initialData?.name || '',
     tasks: initialData?.tasks || [],
@@ -24,8 +34,19 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
     sets: 1,
   })
 
-  const updateField = (field: keyof RoutineFormData, value: string | Task[]) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+  const updateTask = (index: number, field: keyof Task, value: any) => {
+    setFormData((prev) => {
+      const updatedTasks = [...prev.tasks]
+      updatedTasks[index] = { ...updatedTasks[index], [field]: value }
+      return { ...prev, tasks: updatedTasks }
+    })
+  }
+
+  const removeTask = (id: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      tasks: prev.tasks.filter((task) => task.id !== id),
+    }))
   }
 
   const addTask = () => {
@@ -34,7 +55,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
       ...prev,
       tasks: [...prev.tasks, { id: uuidv4(), ...newTask }],
     }))
-    setNewTask({ name: '', description: '', time: undefined, reps: undefined, sets: 1})
+    setNewTask({ name: '', description: '', time: undefined, reps: undefined, sets: 1 })
   }
 
   const handleSubmit = () => {
@@ -48,20 +69,10 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
       <IonInput
         placeholder='Routine Name'
         value={formData.name}
-        onIonChange={(e) => updateField('name', e.detail.value!)}
+        onIonChange={(e) => setFormData((prev) => ({ ...prev, name: e.detail.value! }))}
       />
 
-      <IonList>
-        {formData.tasks.map((task, index) => (
-          <IonItem key={task.id}>
-            <div>
-              {index + 1}. {task.name} {task.time ? `(${task.time}s)` : ''}{' '}
-              {task.reps ? `(${task.reps} reps)` : ''}
-              {task.description && <small style={{ display: "block", color: "gray" }}>{task.description}</small>}
-            </div>
-          </IonItem>
-        ))}
-      </IonList>
+      <TaskList tasks={formData.tasks} updateTask={updateTask} removeTask={removeTask} />
 
       <IonInput
         placeholder='Task Name'
@@ -95,7 +106,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
         Add Task
       </IonButton>
 
-      <IonButton  className='save-btn' onClick={handleSubmit}>
+      <IonButton className='save-btn' onClick={handleSubmit}>
         Save Routine
       </IonButton>
     </>
@@ -103,3 +114,78 @@ const RoutineForm: React.FC<RoutineFormProps> = ({ initialData, onSubmit }) => {
 }
 
 export default RoutineForm
+
+type TaskListProps = {
+  tasks: Task[]
+  updateTask: (index: number, field: keyof Task, value: string | number) => void
+  removeTask: (taskId: string) => void
+}
+
+const TaskList = ({ tasks, updateTask, removeTask }: TaskListProps) => (
+  <IonList>
+    {tasks.map((task, index) => (
+      <IonItem key={task.id}>
+        <IonGrid>
+          <IonRow className='ion-align-items-center'>
+            <IonCol size='9'>
+              <IonItem lines='none'>
+                <IonLabel position='stacked'>Task Name</IonLabel>
+                <IonInput
+                  value={task.name}
+                  onIonChange={(e) => updateTask(index, 'name', e.detail.value!)}
+                />
+              </IonItem>
+
+              <IonItem lines='none'>
+                <IonLabel position='stacked'>Description</IonLabel>
+                <IonTextarea
+                  value={task.description}
+                  autoGrow
+                  onIonChange={(e) => updateTask(index, 'description', e.detail.value!)}
+                />
+              </IonItem>
+
+              <IonRow>
+                <IonCol>
+                  <IonItem lines='none'>
+                    <IonLabel position='stacked'>Time (sec)</IonLabel>
+                    <IonInput
+                      type='number'
+                      value={task.time}
+                      onIonChange={(e) => updateTask(index, 'time', Number(e.detail.value))}
+                    />
+                  </IonItem>
+                </IonCol>
+                <IonCol>
+                  <IonItem lines='none'>
+                    <IonLabel position='stacked'>Reps</IonLabel>
+                    <IonInput
+                      type='number'
+                      value={task.reps}
+                      onIonChange={(e) => updateTask(index, 'reps', Number(e.detail.value))}
+                    />
+                  </IonItem>
+                </IonCol>
+              </IonRow>
+            </IonCol>
+
+            <IonCol size='3' className='ion-text-right'>
+              <IonButton color='danger' onClick={() => removeTask(task.id)}>
+                Delete
+              </IonButton>
+
+              <IonItem lines='none'>
+                <IonLabel position='stacked'>Sets</IonLabel>
+                <IonInput
+                  type='number'
+                  value={task.sets}
+                  onIonChange={(e) => updateTask(index, 'sets', Number(e.detail.value))}
+                />
+              </IonItem>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonItem>
+    ))}
+  </IonList>
+)
